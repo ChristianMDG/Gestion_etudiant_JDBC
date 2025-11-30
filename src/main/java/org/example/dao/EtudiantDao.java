@@ -13,10 +13,10 @@ public class EtudiantDao {
    DbConnection dbConnection = new DbConnection();
     public void addEtudiant(Etudiant etudiant)
     {
-        String sql = "insert into etudiant values (?,?,?,?)";
+        String sql = "insert into etudiant (id, nom, email, age) values (?,?,?,?)";
 
-        try{
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(sql);
+        try(Connection con = dbConnection.getConnection();
+            PreparedStatement preparedStatement = con.prepareStatement(sql)){
             preparedStatement.setInt(1,etudiant.getId());
             preparedStatement.setString(2,etudiant.getNom());
             preparedStatement.setString(3,etudiant.getEmail());
@@ -32,9 +32,9 @@ public class EtudiantDao {
         List<Etudiant> listeEtudiants = new ArrayList<>();
         String sql = "select * from etudiant order by nom";
 
-        try{
-            Statement statement = dbConnection.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+        try(Connection con = dbConnection.getConnection();
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()){
                 listeEtudiants.add(new Etudiant(
                         resultSet.getInt("id"),
@@ -54,8 +54,8 @@ public class EtudiantDao {
     {
         String updateSql = "update etudiant set nom=?, email=?, age=? where id=?";
 
-        try (
-        PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(updateSql)) {
+        try (Connection connection= dbConnection.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
             preparedStatement.setString(1,etudiant.getNom());
             preparedStatement.setString(2,etudiant.getEmail());
             preparedStatement.setInt(3,etudiant.getAge());
@@ -71,8 +71,8 @@ public class EtudiantDao {
     {
         String deleteSql = "delete from etudiant where id=?";
 
-        try (
-        PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(deleteSql)){
+        try (Connection connection = dbConnection.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteSql)){
             preparedStatement.setInt(1,id);
             preparedStatement.executeUpdate();
 
