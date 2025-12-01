@@ -53,7 +53,6 @@ public class EtudiantDao {
     public void updateEtudiant(Etudiant etudiant)
     {
         String updateSql = "update etudiant set nom=?, email=?, age=? where id=?";
-
         try (Connection connection= dbConnection.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
             preparedStatement.setString(1,etudiant.getNom());

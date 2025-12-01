@@ -13,8 +13,8 @@ public class Main {
         EtudiantDao etudiantDao = new EtudiantDao();
         DbConnection dbConnection = new DbConnection();
         while (true){
-            System.out.print("1. Ajouter Etudiant");
-            System.out.print("2. Afficher la liste d'Etudiant");
+            System.out.println("1. Ajouter Etudiant");
+            System.out.println("2. Afficher la liste d'Etudiant");
             System.out.println("3. Modifier un Etudiant");
             System.out.println("4. Supprimer un Etudiant");
             System.out.println("5. Quitter");
